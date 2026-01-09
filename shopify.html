@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latest</title>
+  </head>
+  <style>
+    :root {
+      --revolver-angle: 40deg;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: white;
+      min-height: 200vh;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .revolver-parent {
+      width: 100%;
+      height: 91.736vw;
+      position: relative;
+    }
+
+    /* outer wrapper: stays centered, never rotates */
+    .revolver-center {
+      position: absolute;
+      top: 4.375vw;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+      width: 56.944vw;
+      aspect-ratio: 1/1;
+      border: 1px solid red;
+      
+    }
+
+    /* inner wrapper: rotates in-place */
+    .revolver-wrapper {
+      width: 100%;
+      height: 100%;
+      transform: rotate(calc(var(--progress, 0) * -180deg));
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+
+    .revolver-item {
+      width: 10.126vw;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0)
+        rotate(calc(var(--revolver-angle) * var(--revolver-index)));
+    }
+
+    /* plain CSS (the `& img {}` nesting only works in SCSS) */
+    .revolver-item img {
+      height: unset;
+      width: 100%;
+    }
+
+  </style>
+  <body>
+    <div class="revolver-parent">
+      <div class="revolver-center">
+        <div class="revolver-wrapper">
+        <div style="--revolver-index: 0;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 1;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 2;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 3;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 4;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 5;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 6;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 7;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 8;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 9;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 10;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        <div style="--revolver-index: 11;" class="revolver-item">
+          <img src="./assets/Group 54.png" alt="" />
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lenis + GSAP -->
+    <!-- Lenis (CDN fallback: jsDelivr -> unpkg) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"
+      onerror="this.onerror=null;this.src='https://unpkg.com/lenis@1.3.4/dist/lenis.min.js';"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script>
+      console.log("[inline] script tag executed");
+
+      (function () {
+        window.addEventListener("error", (e) => {
+          console.log("[window.error]", e.message);
+        });
+
+        window.addEventListener("unhandledrejection", (e) => {
+          console.log("[unhandledrejection]", e.reason);
+        });
+
+        function onReady(fn) {
+          if (window.jQuery) {
+            jQuery(fn);
+            return;
+          }
+          if (document.readyState === "loading")
+            document.addEventListener("DOMContentLoaded", fn, { once: true });
+          else fn();
+        }
+
+        onReady(function () {
+          if (!window.Lenis) {
+            console.log("[Lenis] not found on window");
+            return;
+          }
+
+          const lenis = new Lenis({
+            duration: 1.1,
+            smoothWheel: true,
+            smoothTouch: true,
+            gestureOrientation: "vertical",
+          });
+          console.log("Lenis loaded?", !!window.Lenis);
+          console.log("Lenis instance", lenis);
+
+          // Drive your CSS variable (--progress) from Lenis' animated scroll position.
+          // This sets progress 0..1 over the whole page scroll range.
+          const revolverWrapper = document.querySelector(".revolver-wrapper");
+          const clamp01 = (v) => Math.max(0, Math.min(1, v));
+          // Smaller = slower rotation response
+          const PROGRESS_MULT = 0.35;
+          const getMaxScroll = () =>
+            Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+
+          lenis.on("scroll", (e) => {
+            console.log("lenis scroll", e.animatedScroll);
+
+            if (revolverWrapper) {
+              const progress = clamp01(e.animatedScroll / getMaxScroll());
+              revolverWrapper.style.setProperty(
+                "--progress",
+                (progress * PROGRESS_MULT).toFixed(4)
+              );
+            }
+          });
+          window.lenis = lenis;
+
+          if (window.gsap && window.ScrollTrigger && gsap.registerPlugin) {
+            gsap.registerPlugin(ScrollTrigger);
+          }
+
+          if (window.ScrollTrigger) {
+            lenis.on("scroll", ScrollTrigger.update);
+          }
+
+          if (window.gsap && gsap.ticker) {
+            gsap.ticker.add((t) => lenis.raf(t * 1000));
+            gsap.ticker.lagSmoothing(0);
+          } else {
+            const raf = (time) => {
+              lenis.raf(time);
+              requestAnimationFrame(raf);
+            };
+            requestAnimationFrame(raf);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
