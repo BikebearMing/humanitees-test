@@ -1,82 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Latest</title>
-  </head>
-  <style>
-    :root {
-      --revolver-angle: 40deg;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latest</title>
+  <!-- ADDED BY AI START -->
+  <link rel="stylesheet" href="https://use.typekit.net/cdf4adh.css">
+  <!-- ADDED BY AI END -->
+  <script>
+    /* ADDED BY AI START */
+    // Always start at the top on refresh / page load (disable scroll restoration).
+    // Handles normal reloads + bfcache restores (Safari/Chrome back-forward cache).
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      background-color: white;
-      min-height: 200vh;
-    }
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      // Some browsers apply scroll restoration after load; do a couple extra ticks.
+      requestAnimationFrame(() => window.scrollTo(0, 0));
+      setTimeout(() => window.scrollTo(0, 0), 0);
+    };
 
-    * {
-      box-sizing: border-box;
-    }
+    window.addEventListener("DOMContentLoaded", scrollToTop, { once: true });
+    window.addEventListener("pageshow", scrollToTop);
+    /* ADDED BY AI END */
+  </script>
+</head>
+<style>
+  :root {
+    --revolver-angle: 30deg;
+    --white: #F9F4F1;
+    --black: #333333;
+  
 
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    --moret-variable: "moret-variable", serif;
+  }
 
-    .revolver-parent {
-      width: 100%;
-      height: 91.736vw;
-      position: relative;
-    }
+  /* Futura Cond from futura-cond_uEZPE.zip */
+  @font-face {
+    font-family: "Futura Cond";
+    src: url("./assets/fonts/FuturaCond-Medium.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
 
-    /* outer wrapper: stays centered, never rotates */
-    .revolver-center {
-      position: absolute;
-      top: 4.375vw;
-      left: 50%;
-      transform: translate3d(-50%, 0, 0);
-      width: 56.944vw;
-      aspect-ratio: 1/1;
-      border: 1px solid red;
-      
-    }
+  @font-face {
+    font-family: "Futura Cond";
+    src: url("./assets/fonts/FuturaCond-MediumItalic.otf") format("opentype");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+  }
 
-    /* inner wrapper: rotates in-place */
-    .revolver-wrapper {
-      width: 100%;
-      height: 100%;
-      transform: rotate(calc(var(--progress, 0) * -180deg));
-      transform-origin: 50% 50%;
-      will-change: transform;
-    }
+  @font-face {
+    font-family: "Futura Cond";
+    src: url("./assets/fonts/FuturaCond-Bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
 
-    .revolver-item {
-      width: 10.126vw;
-      height: 100%;
+  @font-face {
+    font-family: "Futura Cond";
+    src: url("./assets/fonts/FuturaCond-BoldItalic.otf") format("opentype");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--white);
+    overflow-x: clip;
+    font-family: "Futura Cond", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    transition: overflow 0.3s ease-in-out;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    margin: 0;
+  }
+
+  /* ADDED BY AI START */
+  /* Locks scrolling while the preloader runs */
+  body.is-loading {
+    overflow: hidden;
+    height: 100vh;
+  }
+  /* ADDED BY AI END */
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .h1 {
+    font-family: var(--moret-variable);
+    font-size: 20.021vw;
+    font-weight: 300;
+    line-height: 0.8;
+    letter-spacing: -1.001vw;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--black);
+  }
+
+  
+
+  .h4 {
+    font-size: 2.778vw;
+    line-height: 0.85;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .triple-line {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    &::before {
+      content: '';
       position: absolute;
       top: 0;
       left: 50%;
-      transform: translate3d(-50%, 0, 0)
-        rotate(calc(var(--revolver-angle) * var(--revolver-index)));
+      transform: translateX(-50%);
+      width: 50vw;
+      height: 100%;
+      background: url('./assets/tripleline.png') no-repeat center center;
+    }
+  }
+
+  .revolver-parent {
+    width: 100%;
+    min-height: 91.736vw;
+    position: relative;
+    background-color: var(--white);
+    overflow-x: clip;
+  }
+
+  /* outer wrapper: stays centered, never rotates */
+  .revolver-center {
+    position: absolute;
+    top: 4.375vw;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    width: 56.944vw;
+    aspect-ratio: 1/1;
+
+  }
+
+  /* inner wrapper: rotates in-place */
+  .revolver-wrapper {
+    width: 100%;
+    height: 100%;
+    transform: rotate(calc(var(--progress, 0) * -180deg));
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  .revolver-item {
+    width: 10.126vw;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0) rotate(calc(var(--revolver-angle) * var(--revolver-index)));
+  }
+
+  /* plain CSS (the `& img {}` nesting only works in SCSS) */
+  .revolver-item img {
+    height: unset;
+    width: 100%;
+  }
+
+
+  .grain-effect {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    overflow: hidden;
+    isolation: isolate; 
+  }
+
+  .grain-effect::after {
+    content: '';
+      position: absolute;
+      top: -5%;
+      left: -5%;;
+      width: 110%;
+      height: 110%;
+      opacity: .15;
+      background-image: repeating-conic-gradient(var(--black) 0%, transparent .00003%, transparent .0005%, transparent .00095%), repeating-conic-gradient(var(--black) 0%, transparent .00005%, transparent 0.00015%, transparent 0.0009%);
+      background-size: cover;
+      animation: grain 0.5s steps(1) infinite;
+      z-index: 0;
+  pointer-events: none;
+  }
+
+  .triple-line::before{
+  z-index: 1;         /* above grain, below content */
+  pointer-events: none;
+}
+
+/* lift only the section’s immediate content */
+.grain-effect > *{
+  position: relative;
+  z-index: 2;
+}
+
+
+
+
+
+  @keyframes grain {
+
+    0%,
+    100% {
+      transform: translate(0, 0);
     }
 
-    /* plain CSS (the `& img {}` nesting only works in SCSS) */
-    .revolver-item img {
-      height: unset;
+    10% {
+      transform: translate(-1%, -1%);
+    }
+
+    20% {
+      transform: translate(1%, 1%);
+    }
+
+    30% {
+      transform: translate(-2%, -2%);
+    }
+
+    40% {
+      transform: translate(3%, 3%);
+    }
+
+    50% {
+      transform: translate(-3%, -3%);
+    }
+
+    60% {
+      transform: translate(4%, 4%);
+    }
+
+    70% {
+      transform: translate(-4%, -4%);
+    }
+
+    80% {
+      transform: translate(2%, 2%);
+    }
+
+    90% {
+      transform: translate(-3%, -3%);
+    }
+  }
+
+
+
+  .preloader-to-banner {
+    width: 100%;
+    min-height: 100vh;
+    height: 72.986vw;
+    /* ADDED BY AI START */
+    /* Full-screen overlay so user cannot scroll to content underneath */
+    /* position: fixed;
+    inset: 0;
+    z-index: 9999; */
+    /* If you keep it non-fixed for now, we still need it positioned so the progress bar can sit at the bottom */
+    position: relative;
+    /* ADDED BY AI END */
+    background-color: var(--white);
+
+    & .wrapper {
       width: 100%;
-    }
+      height: 100%;
 
-  </style>
-  <body>
-    <div class="revolver-parent">
-      <div class="revolver-center">
-        <div class="revolver-wrapper">
+      & .preloader {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.042vw;
+        padding-top: 7.111vw;
+
+        & .gif-effect {
+          position: absolute;
+          top: 6.944vw;
+          left: 44.097vw;
+          width: 12.995vw;
+          height: 19.779vw;
+
+          & img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+          }
+        }
+
+
+        & .opening-header {
+          max-width: 23.486vw;
+          position: absolute;
+                top: 30vw;
+                max-width: 23.486vw;
+
+          & h4 {
+            text-align: center;
+          }
+        }
+      }
+      
+
+    }
+  }
+
+  /* "gif" frame state (used by JS) */
+  .gif-effect img.is-active {
+    opacity: 1 !important;
+  }
+
+  /* ADDED BY AI START */
+  /*
+    IMPORTANT:
+    You currently have SCSS-style nesting in this file (selectors using `&`).
+    Browsers ignore that in a normal <style> tag, which can cause .gif-effect to have no sizing,
+    and images to end up invisible (height: 100% of an auto/0-height parent).
+
+    These are plain-CSS overrides to ensure the preloader + gif frames always render.
+  */
+  .preloader-to-banner > .wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .preloader-to-banner .preloader {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.042vw;
+    padding-top: 7.111vw;
+    overflow-y: clip;
+  }
+
+
+  .preloader-to-banner .gif-effect img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+
+  .progress {
+    position: absolute;
+    bottom: 2.083vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .preloader-to-banner .gif-effect img.is-active {
+    opacity: 1;
+  }
+
+  /* ADDED BY AI START */
+  /* Generic mask helper for text reveal/hide animations */
+  .mask {
+    overflow: hidden;
+    overflow-x: visible !important;
+  }
+  /* Ensure masked text animates cleanly */
+  .mask > * {
+    display: block;
+    will-change: transform;
+  }
+
+  /* Line-by-line masking (each line gets its own overflow-hidden wrapper) */
+  .mask .line-mask {
+    overflow: hidden;
+    overflow-x: visible !important;
+  }
+
+  .mask .line {
+    display: block;
+    will-change: transform;
+  }
+  /* ADDED BY AI END */
+
+  .hero-banner {
+    width: 100%;
+    height: 100%;
+
+    & .wrapper {
+      width: 100%;
+      height: 100%;
+
+
+      & .top {
+        position: absolute;
+        top: 4.583vw;
+        left: 0.694vw;
+      }
+    }
+  }
+
+  /* ADDED BY AI START */
+  /*
+    Plain-CSS override for hero banner (your `&` nesting above is SCSS syntax and won't apply in a normal <style> tag).
+    This ensures the banner headline positioning works.
+  */
+  .preloader-to-banner .hero-banner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+}
+
+  .preloader-to-banner .hero-banner .wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .preloader-to-banner .hero-banner .top {
+    position: absolute;
+    top: 4.583vw;
+    left: 10.569vw;
+    overflow-x: visible;
+  }
+
+  .preloader-to-banner .hero-banner .bottom {
+    & .opening-video {
+      width: 97.917vw;
+      height: 45.833vw;
+      margin-inline: auto;
+      transform: translateY(110%);
+    }
+  }
+
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* ADDED BY AI END */
+
+  /* ADDED BY AI START */
+  /*
+    Ensure the opening video is actually visible/positioned.
+    The rule above uses nested selectors; modern browsers may support it, but GSAP can "inherit" the transform
+    and turn it into extra translateY pixels (causing the video to stay off-screen).
+
+    These overrides:
+    - pin the bottom area
+    - apply sizing with a plain selector
+    - avoid a CSS transform so GSAP fully controls the Y movement
+  */
+  .preloader-to-banner .hero-banner .bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+
+  .preloader-to-banner .hero-banner .bottom .opening-video {
+    width: 97.917vw;
+    height: 45.833vw;
+    margin-inline: auto;
+    pointer-events: auto;
+    transform: none;
+  }
+  /* ADDED BY AI END */
+</style>
+
+<body>
+  <section class="preloader-to-banner grain-effect triple-line">
+    <div class="wrapper">
+      <div class="preloader">
+        <div class="gif-effect">
+          <img id="to-banner" src="./assets/h-1.png" alt="">
+          <img src="./assets/h-2.png" alt="">
+          <img src="./assets/h-3.png" alt="">
+        </div>
+
+        <div class="opening-header">
+          <!-- ADDED BY AI START -->
+          <!-- Mask wrapper for "slide down/out" animation -->
+          <div class="mask">
+            <h4 class="h4">
+              To be human is to be <br> a part of something <br> bigger
+            </h4>
+          </div>
+          <!-- ADDED BY AI END -->
+        </div>
+
+        <div class="progress">
+          <!-- ADDED BY AI START -->
+          <!-- Mask wrapper for "slide down/out" animation -->
+          <div class="mask">
+            <h6>0%</h6>
+          </div>
+          <!-- ADDED BY AI END -->
+        </div>
+      </div>
+
+      <div class="hero-banner">
+        <div class="wrapper">
+          <div class="top">
+            <!-- ADDED BY AI START -->
+            <!-- Mask wrapper for "reveal from floor" animation -->
+            <div class="mask hero-title-mask">
+              <h1 class="h1 moret">UMAN-I-TEES</h1>
+            </div>
+            <!-- ADDED BY AI END -->
+          </div>
+
+          <div class="bottom">
+            <div class="opening-video">
+              <video src="./assets/banner-video.mp4" autoplay muted loop playsinline preload="auto"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  
+  </section>
+
+
+  <div class="revolver-parent triple-line grain-effect">
+    <div class="revolver-center">
+      <div class="revolver-wrapper">
         <div style="--revolver-index: 0;" class="revolver-item">
           <img src="./assets/Group 54.png" alt="" />
         </div>
@@ -113,41 +591,343 @@
         <div style="--revolver-index: 11;" class="revolver-item">
           <img src="./assets/Group 54.png" alt="" />
         </div>
-        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Lenis + GSAP -->
-    <!-- Lenis (CDN fallback: jsDelivr -> unpkg) -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"
-      onerror="this.onerror=null;this.src='https://unpkg.com/lenis@1.3.4/dist/lenis.min.js';"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script>
-      console.log("[inline] script tag executed");
+  <!-- Lenis + GSAP -->
+  <!-- Lenis (CDN fallback: jsDelivr -> unpkg) -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"
+    onerror="this.onerror=null;this.src='https://unpkg.com/lenis@1.3.4/dist/lenis.min.js';"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    console.log("[inline] script tag executed");
 
-      (function () {
-        window.addEventListener("error", (e) => {
-          console.log("[window.error]", e.message);
-        });
+    (function () {
+      window.addEventListener("error", (e) => {
+        console.log("[window.error]", e.message);
+      });
 
-        window.addEventListener("unhandledrejection", (e) => {
-          console.log("[unhandledrejection]", e.reason);
-        });
+      window.addEventListener("unhandledrejection", (e) => {
+        console.log("[unhandledrejection]", e.reason);
+      });
 
-        function onReady(fn) {
-          if (window.jQuery) {
-            jQuery(fn);
-            return;
+      function onReady(fn) {
+        if (window.jQuery) {
+          jQuery(fn);
+          return;
+        }
+        if (document.readyState === "loading")
+          document.addEventListener("DOMContentLoaded", fn, { once: true });
+        else fn();
+      }
+
+      onReady(function () {
+        /* ADDED BY AI START */
+        // Split text inside an element (e.g. H1/H4) into real rendered lines so we can animate line-by-line.
+        // IMPORTANT: we keep the original element so your existing typography/styles still apply.
+        // No plugins required (avoids GSAP SplitText).
+        function splitTextElToLines(textEl) {
+          if (!textEl) return [];
+
+          // If already split, reuse existing lines
+          const existing = Array.from(textEl.querySelectorAll(".line"));
+          if (existing.length) return existing;
+
+          // If author added <br> tags, treat them as HARD line breaks and follow them exactly.
+          // This avoids reflow-based line detection and preserves your intended line structure.
+          const hasBr = !!textEl.querySelector("br");
+          if (hasBr) {
+            const clone = textEl.cloneNode(true);
+            clone.querySelectorAll("br").forEach((br) => br.replaceWith(document.createTextNode("\n")));
+            const parts = (clone.textContent || "")
+              .split("\n")
+              .map((s) => s.trim())
+              .filter(Boolean);
+
+            const frag = document.createDocumentFragment();
+            const lineEls = [];
+
+            parts.forEach((part) => {
+              const lineMask = document.createElement("span");
+              lineMask.className = "line-mask";
+              lineMask.style.display = "block";
+              lineMask.style.overflow = "hidden";
+
+              const line = document.createElement("span");
+              line.className = "line";
+              line.style.display = "block";
+
+              const words = part.split(/\s+/).filter(Boolean);
+              words.forEach((w, idx) => {
+                const word = document.createElement("span");
+                word.style.display = "inline-block";
+                word.textContent = w;
+                line.appendChild(word);
+                if (idx !== words.length - 1) {
+                  line.appendChild(document.createTextNode(" "));
+                }
+              });
+
+              lineMask.appendChild(line);
+              frag.appendChild(lineMask);
+              lineEls.push(line);
+            });
+
+            textEl.innerHTML = "";
+            textEl.appendChild(frag);
+            return lineEls;
           }
-          if (document.readyState === "loading")
-            document.addEventListener("DOMContentLoaded", fn, { once: true });
-          else fn();
+
+          const text = (textEl.textContent || "").trim();
+          if (!text) return [];
+
+          // Turn the text into word spans so we can measure line breaks
+          const words = text.split(/\s+/);
+          textEl.textContent = "";
+
+          const wordSpans = words.map((w) => {
+            const span = document.createElement("span");
+            span.style.display = "inline-block";
+            span.textContent = w;
+            textEl.appendChild(span);
+            // IMPORTANT: use a real text node space between inline-block spans
+            // (trailing spaces inside spans can get collapsed and "disappear")
+            textEl.appendChild(document.createTextNode(" "));
+            return span;
+          });
+          // Remove the last trailing space node we added
+          if (textEl.lastChild && textEl.lastChild.nodeType === Node.TEXT_NODE) {
+            textEl.removeChild(textEl.lastChild);
+          }
+
+          // Group words by offsetTop (each unique top == a new line)
+          const lines = [];
+          let currentTop = null;
+          let currentLine = [];
+
+          wordSpans.forEach((span) => {
+            const top = span.offsetTop;
+            if (currentTop === null) currentTop = top;
+            if (top !== currentTop) {
+              lines.push(currentLine);
+              currentLine = [];
+              currentTop = top;
+            }
+            currentLine.push(span);
+          });
+          if (currentLine.length) lines.push(currentLine);
+
+          // Replace element contents with inline wrappers (valid inside H1/H4/H6)
+          const frag = document.createDocumentFragment();
+          const lineEls = [];
+
+          lines.forEach((lineWords) => {
+            const lineMask = document.createElement("span");
+            lineMask.className = "line-mask";
+            lineMask.style.display = "block";
+            lineMask.style.overflow = "hidden";
+
+            const line = document.createElement("span");
+            line.className = "line";
+            line.style.display = "block";
+
+            // Rebuild spans + spaces so spacing is guaranteed
+            lineWords.forEach((wSpan, idx) => {
+              const clone = wSpan.cloneNode(true);
+              line.appendChild(clone);
+              // Add a space after every word except the last word in the entire text
+              // (trailing spaces at end of a block line won't show, so this is safe).
+              const isLastWordOverall = wSpan === wordSpans[wordSpans.length - 1];
+              if (!isLastWordOverall) {
+                line.appendChild(document.createTextNode(" "));
+              }
+            });
+            lineMask.appendChild(line);
+            frag.appendChild(lineMask);
+            lineEls.push(line);
+          });
+
+          textEl.innerHTML = "";
+          textEl.appendChild(frag);
+
+          return lineEls;
         }
 
-        onReady(function () {
+        // Smooth preloader timeline:
+        // - locks scroll
+        // - cycles images like a "gif"
+        // - counts 0% -> 100% over ~2.5s (not tied to real load)
+        // - at 100%, forces the FIRST image to show and pauses there
+        // - fades the preloader out and unlocks scroll
+        //
+        // Then we initialize Lenis AFTER the preloader, so nothing scroll-driven runs underneath.
+        function runPreloader() {
+          return new Promise((resolve) => {
+            const preloaderSection = document.querySelector(".preloader-to-banner");
+            const frames = Array.from(document.querySelectorAll(".gif-effect img"));
+            const progressEl = document.querySelector(".preloader .progress h6");
+            const gifEffectEl = document.querySelector(".gif-effect");
+            const openingHeaderEl = document.querySelector(".opening-header .mask .h4");
+            const progressText = document.querySelector(".progress .mask > *");
+            const heroTitleEl = document.querySelector(".hero-banner .hero-title-mask .h1");
+            const openingVideoEl = document.querySelector(".opening-video");
+
+            if (!preloaderSection || frames.length === 0 || !progressEl) {
+              resolve();
+              return;
+            }
+
+            document.body.classList.add("is-loading");
+
+            const setActiveFrame = (idx) => {
+              frames.forEach((img, i) => img.classList.toggle("is-active", i === idx));
+            };
+
+            // Initial state
+            setActiveFrame(0);
+            progressEl.textContent = "0%";
+            // Prepare line-by-line masks and initial hero hidden state
+            const openingLines = splitTextElToLines(openingHeaderEl);
+            const heroLines = splitTextElToLines(heroTitleEl);
+            if (window.gsap && heroLines.length) {
+              gsap.set(heroLines, { yPercent: 110 });
+            }
+            // Ensure opening video starts off-screen.
+            // Important: remove any CSS `transform: translateY(110%)` first so GSAP doesn't inherit it as extra pixels.
+            if (window.gsap && openingVideoEl) {
+              openingVideoEl.style.transform = "none";
+              gsap.set(openingVideoEl, { x: 0, y: 0, yPercent: 110, transformOrigin: "50% 50%" });
+            }
+
+            // Fallback if GSAP is missing: wait, then hide preloader at 100%
+            if (!window.gsap) {
+              window.setTimeout(() => {
+                setActiveFrame(0);
+                progressEl.textContent = "100%";
+                document.body.classList.remove("is-loading");
+                window.__preloaderDone = true;
+                resolve({ preloaderSection, frames, progressEl });
+              }, 2500);
+              return;
+            }
+
+            // FLIP-style move for .gif-effect: transform-based for smoothness (no janky left/top animation).
+            // Target (as requested):
+            //   height: 16.847vw; width: 10.875vw; left: 0.625vw; top: 3.194vw; z-index: 999
+            const flipGifToBannerTarget = () => {
+              if (!gifEffectEl) return gsap.timeline();
+
+              const vwToPx = (vw) => (window.innerWidth * vw) / 100;
+              const containerRect = preloaderSection.getBoundingClientRect();
+              const startRect = gifEffectEl.getBoundingClientRect();
+
+              const destLeft = vwToPx(0.625);
+              const destTop = vwToPx(3.194);
+              const destWidth = vwToPx(10.875);
+              const destHeight = vwToPx(16.847);
+
+              // Place element at its FINAL position/sizing (absolute), then invert via transforms
+              gsap.set(gifEffectEl, {
+                position: "absolute",
+                left: destLeft,
+                top: destTop,
+                width: destWidth,
+                height: destHeight,
+                zIndex: 999,
+                margin: 0,
+              });
+
+              const finalLeftOnPage = containerRect.left + destLeft;
+              const finalTopOnPage = containerRect.top + destTop;
+
+              const dx = startRect.left - finalLeftOnPage;
+              const dy = startRect.top - finalTopOnPage;
+              const sx = startRect.width / destWidth;
+              const sy = startRect.height / destHeight;
+
+              gsap.set(gifEffectEl, {
+                transformOrigin: "0 0",
+                x: dx,
+                y: dy,
+                scaleX: sx,
+                scaleY: sy,
+              });
+
+              return gsap.to(gifEffectEl, {
+                x: 0,
+                y: 0,
+                scaleX: 1,
+                scaleY: 1,
+                duration: 1.15,
+                ease: "power3.inOut",
+                overwrite: true,
+              });
+            };
+
+            // Fake progress (not tied to real load time)
+            const DURATION = 2.5; // set 2.0-3.0 if you want
+            const prog = { v: 0 };
+
+            gsap.timeline({
+              defaults: { ease: "none" },
+              onComplete: () => {
+                // "last image becomes first" at 100%
+                setActiveFrame(0);
+              },
+            })
+              .to(prog, {
+                v: 100,
+                duration: DURATION,
+                onUpdate: () => {
+                  const pct = Math.round(prog.v);
+                  progressEl.textContent = `${pct}%`;
+
+                  // Sync frame cycling to the same progress tween (smooth + deterministic).
+                  // Increase FRAME_LOOPS to cycle faster (still lands back on frame 0 at 100%).
+                  const FRAME_LOOPS = 6;
+                  const t = pct / 100; // 0..1
+                  const idx = Math.floor(t * frames.length * FRAME_LOOPS) % frames.length;
+                  setActiveFrame(idx);
+                },
+              })
+              // 100% reached -> hide opening header + progress (masked "down" motion)
+              .to([...(openingLines || []), progressText].filter(Boolean), {
+                yPercent: 120,
+                duration: 0.35,
+                ease: "power3.in",
+                stagger: 0.04,
+                overwrite: true,
+              })
+              // Move the gif into its banner position (smooth)
+              .add(flipGifToBannerTarget())
+              // Small buffer so the gif "lands" before the hero text reveals (not too long)
+              .to({}, { duration: 0.18 })
+              // Reveal hero banner title with a masked translate-up
+              .to(heroLines, {
+                yPercent: 0,
+                duration: 0.9,
+                ease: "power3.out",
+                overwrite: true,
+                stagger: 0.07,
+              })
+              // After the banner text comes up, bring the video up to 50%
+              .to(openingVideoEl, {
+                yPercent: 0,
+                duration: 1.1,
+                ease: "power3.out",
+                overwrite: true,
+              })
+              .call(() => {
+                document.body.classList.remove("is-loading");
+                window.__preloaderDone = true;
+                resolve({ preloaderSection, frames, progressEl });
+              });
+          });
+        }
+
+        function initLenis() {
           if (!window.Lenis) {
             console.log("[Lenis] not found on window");
             return;
@@ -202,8 +982,13 @@
             };
             requestAnimationFrame(raf);
           }
-        });
-      })();
-    </script>
-  </body>
+        }
+
+        runPreloader().then(initLenis);
+        /* ADDED BY AI END */
+      });
+    })();
+  </script>
+</body>
+
 </html>
