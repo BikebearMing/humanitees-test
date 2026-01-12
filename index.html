@@ -31,9 +31,11 @@
 <style>
   :root {
     --revolver-angle: 30deg;
+    /* Revolver rotation range over a full page scroll (increase magnitude = faster spin) */
+    --revolver-rotation-range: -360deg;
     --white: #F9F4F1;
     --black: #333333;
-
+    --futura-cond: "Futura Cond", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
     --moret-variable: "moret-variable", serif;
   }
@@ -90,6 +92,25 @@
     transition: overflow 0.3s ease-in-out;
   }
 
+  a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: var(--futura-cond);
+  }
+  .custom-button {
+    padding-block: .417vw;
+    padding-inline: .764vw;
+    border: .069vw solid #333;
+    background:  #FF944D;
+    border-radius: 1.736vw;
+    font-size: .833vw;;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025vw;
+    text-transform: uppercase;
+  }
+
   h1,
   h2,
   h3,
@@ -104,7 +125,7 @@
   body.is-loading {
     overflow: hidden;
     height: 100vh;
-    padding-right: var(--sbw, 0px);
+    padding-right: var(--sbw, 0vw);
   }
 
   /* ADDED BY AI END */
@@ -129,7 +150,7 @@
     font-size: 4.861vw;
     font-weight: 700;
     line-height: 0.85;
-    letter-spacing: -3.5px;
+    letter-spacing: -0.243vw;
     text-transform: uppercase;
     color: white;
   }
@@ -141,7 +162,7 @@
     line-height: 0.85;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: -2px;
+    letter-spacing: -0.139vw;
   }
 
   img {
@@ -174,7 +195,54 @@
     position: relative;
     background-color: #333;
     overflow-x: clip;
+
+    & .right-text {
+      max-width: 9.792vw;
+      position: absolute;
+      right: 14.653vw;
+      top: 48.056vw;
+      z-index: 5;
+
+      & h5 {
+        text-transform: uppercase;
+        
+      }
+    }
+
+    & .squiggly-gif-2 {
+      position: absolute;
+      top: 38.958vw;
+      left: 9.444vw;
+      width: 21.52vw;
+      height: 21.52vw;
+      z-index: 4;
+    }
+
+    & .middle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.042vw;
+      text-wrap: nowrap;
+
+      & .dollar-icon {
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        margin-inline: 0.3em;
+    }
   }
+
+}
+
+.dark {
+  color: white;
+}
 
   /* outer wrapper: stays centered, never rotates */
   .revolver-center {
@@ -182,7 +250,7 @@
     top: 4.375vw;
     left: 50%;
     transform: translate3d(-50%, 0, 0);
-    width: 56.944vw;
+    width: 60.944vw;
     aspect-ratio: 1/1;
 
   }
@@ -191,7 +259,7 @@
   .revolver-wrapper {
     width: 100%;
     height: 100%;
-    transform: rotate(calc(var(--progress, 0) * -180deg));
+    transform: rotate(calc(var(--progress, 0) * var(--revolver-rotation-range)));
     transform-origin: 50% 50%;
     will-change: transform;
   }
@@ -401,7 +469,7 @@
       display: flex;
       gap: 20.833vw;
       left: 0.694vw;
-      top: 25.361vw;
+      top: 27.361vw;
 
     }
 
@@ -459,12 +527,14 @@
   .preloader-to-banner .abso-content #top-left,
   .preloader-to-banner .abso-content #topright,
   .preloader-to-banner .abso-content #bottom-right {
-    visibility: hidden; /* prevent flash before GSAP runs */
+    visibility: hidden;
+    /* prevent flash before GSAP runs */
   }
 
   .preloader-to-banner .abso-content .top-texts h6,
   .preloader-to-banner .abso-content .middle-text h6 {
-    overflow: hidden; /* mask floor */
+    overflow: hidden;
+    /* mask floor */
   }
 
   .preloader-to-banner .abso-content .abso-line {
@@ -478,6 +548,7 @@
   .preloader-to-banner .abso-content #bottom-right {
     will-change: transform;
   }
+
   /* ADDED BY AI END */
 
   .preloader-to-banner .preloader {
@@ -578,8 +649,8 @@
 
   .preloader-to-banner .hero-banner .top {
     position: absolute;
-    top: 4.583vw;
-    left: 10.569vw;
+    top: 4.2vw;
+    left: 11.269vw;
     overflow-x: visible;
   }
 
@@ -876,11 +947,12 @@
             </div>
 
             <div class="squiggly-gif-container">
-              <img src="./assets/squiggly-gif.png" alt="">
+              <img src="./assets/Wear_What_Matters_Black.gif" alt="">
             </div>
 
             <div class="middle-text">
-              <h6><span class="abso-line">In a world of noise, the most powerful voice is one that stands for others.</span></h6>
+              <h6><span class="abso-line">In a world of noise, the most powerful voice is one that stands for
+                  others.</span></h6>
             </div>
 
             <div id="top-left">
@@ -910,7 +982,25 @@
 
 
   <div class="revolver-parent triple-line grain-effect">
+
+    <div class="squiggly-gif-2">
+      <img src="./assets/Stand together.gif" alt="">
+    </div>
+
+    <div class="right-text">
+      <h5 class="h5 dark">HUMANITEES, The name is a mashup of “Humanity” and “Tees.” It’s about connecting people through clothing and standing for something bigger than ourselves.</h5>
+    </div>
+
     <div class="revolver-center">
+
+      <div class="middle-text">
+        <h5 class="h5 subhead dark">STARTED BACK IN THE 90S</h5>
+        <h4 class="h4 dark">WE MAKE CLOTHING THAT SPARKS <br> CONVERSATION AND DRIVE ACTION, <br> DONATING 1 <img class="dollar-icon"
+            src="./assets/dollar-icon.png" alt=""> FROM EVERY SHIRT <br> TO OUR PLANET.</h4>
+
+            <a href="#" class="custom-button">About</a>
+      </div>
+
       <div class="revolver-wrapper">
         <div style="--revolver-index: 0;" class="revolver-item">
           <img src="./assets/Group 54.png" alt="" />
@@ -1104,6 +1194,57 @@
           return lineEls;
         }
 
+        // Wrap <br>-separated lines without destroying inline elements (e.g. <img> inside a headline).
+        // Returns the created `.line` elements (each inside a `.line-mask`).
+        function wrapBrSeparatedLinesToMasks(textEl) {
+          if (!textEl) return [];
+          const existing = Array.from(textEl.querySelectorAll(":scope > .line-mask > .line"));
+          if (existing.length) return existing;
+
+          const children = Array.from(textEl.childNodes);
+          const lines = [];
+          let buf = [];
+
+          const flush = () => {
+            // Keep empty lines out
+            if (!buf.length) return;
+            lines.push(buf);
+            buf = [];
+          };
+
+          children.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === "BR") {
+              flush();
+            } else {
+              buf.push(node);
+            }
+          });
+          flush();
+
+          const frag = document.createDocumentFragment();
+          const lineEls = [];
+          lines.forEach((nodes) => {
+            const lineMask = document.createElement("span");
+            lineMask.className = "line-mask";
+            lineMask.style.display = "block";
+            lineMask.style.overflow = "hidden";
+
+            const line = document.createElement("span");
+            line.className = "line";
+            line.style.display = "block";
+            line.style.willChange = "transform";
+
+            nodes.forEach((n) => line.appendChild(n));
+            lineMask.appendChild(line);
+            frag.appendChild(lineMask);
+            lineEls.push(line);
+          });
+
+          textEl.innerHTML = "";
+          textEl.appendChild(frag);
+          return lineEls;
+        }
+
         // Smooth preloader timeline:
         // - locks scroll
         // - cycles images like a "gif"
@@ -1122,6 +1263,10 @@
             const progressText = document.querySelector(".progress .mask > *");
             const heroTitleEl = document.querySelector(".hero-banner .hero-title-mask .h1");
             const openingVideoEl = document.querySelector(".opening-video");
+            const videoTextEl = document.querySelector(".opening-video .video-text");
+            const videoTextInners = videoTextEl
+              ? Array.from(videoTextEl.querySelectorAll(".video-text-inner"))
+              : [];
             // before adding is-loading
             const sbw = window.innerWidth - document.documentElement.clientWidth;
             document.documentElement.style.setProperty("--sbw", sbw + "px");
@@ -1170,6 +1315,22 @@
               return;
             }
 
+            // Don't show the first "HUMANS DON'T CHANGE..." overlay until the pinned scroll begins.
+            gsap.set(videoTextEl, { visibility: "hidden" });
+            gsap.set(videoTextInners, { yPercent: 140 });
+
+            // Keep the "gif" frames cycling continuously (independent of progress),
+            // so it keeps looping during the FLIP move and after.
+            let frameLoopCall = null;
+            const FRAME_STEP = 0.17; // seconds per frame (bigger = slower)
+            let frameIdx = 0;
+            const tickFrameLoop = () => {
+              setActiveFrame(frameIdx);
+              frameIdx = (frameIdx + 1) % frames.length;
+              frameLoopCall = gsap.delayedCall(FRAME_STEP, tickFrameLoop);
+            };
+            tickFrameLoop();
+
             // FLIP-style move for .gif-effect: transform-based for smoothness (no janky left/top animation).
             // Target (as requested):
             //   height: 16.847vw; width: 10.875vw; left: 0.625vw; top: 3.194vw; z-index: 999
@@ -1217,7 +1378,7 @@
                 y: 0,
                 scaleX: 1,
                 scaleY: 1,
-                duration: 1.15,
+                duration: 0.85,
                 ease: "power3.inOut",
                 overwrite: true,
               });
@@ -1229,10 +1390,6 @@
 
             gsap.timeline({
               defaults: { ease: "none" },
-              onComplete: () => {
-                // "last image becomes first" at 100%
-                setActiveFrame(0);
-              },
             })
               .to(prog, {
                 v: 100,
@@ -1240,39 +1397,32 @@
                 onUpdate: () => {
                   const pct = Math.round(prog.v);
                   progressEl.textContent = `${pct}%`;
-
-                  // Sync frame cycling to the same progress tween (smooth + deterministic).
-                  // Increase FRAME_LOOPS to cycle faster (still lands back on frame 0 at 100%).
-                  const FRAME_LOOPS = 6;
-                  const t = pct / 100; // 0..1
-                  const idx = Math.floor(t * frames.length * FRAME_LOOPS) % frames.length;
-                  setActiveFrame(idx);
                 },
               })
               // 100% reached -> hide opening header + progress (masked "down" motion)
               .to([...(openingLines || []), progressText].filter(Boolean), {
                 yPercent: 120,
-                duration: 0.35,
+                duration: 0.3,
                 ease: "power3.in",
-                stagger: 0.04,
+                stagger: 0.03,
                 overwrite: true,
               })
               // Move the gif into its banner position (smooth)
               .add(flipGifToBannerTarget())
               // Small buffer so the gif "lands" before the hero text reveals (not too long)
-              .to({}, { duration: 0.18 })
+              .to({}, { duration: 0.1 })
               // Reveal hero banner title with a masked translate-up
               .to(heroLines, {
                 yPercent: 0,
-                duration: 0.9,
+                duration: 0.7,
                 ease: "power3.out",
                 overwrite: true,
-                stagger: 0.07,
+                stagger: 0.06,
               })
               // After the banner text comes up, bring the video up to 50%
               .to(openingVideoEl, {
                 yPercent: 0,
-                duration: 1.1,
+                duration: 0.9,
                 ease: "power3.out",
                 overwrite: true,
               })
@@ -1303,8 +1453,8 @@
           // This sets progress 0..1 over the whole page scroll range.
           const revolverWrapper = document.querySelector(".revolver-wrapper");
           const clamp01 = (v) => Math.max(0, Math.min(1, v));
-          // Smaller = slower rotation response
-          const PROGRESS_MULT = 0.35;
+          // Bigger = faster rotation response (0.35 was fairly subtle)
+          const PROGRESS_MULT = 0.6;
           const getMaxScroll = () =>
             Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 
@@ -1328,6 +1478,69 @@
           if (window.ScrollTrigger) {
             lenis.on("scroll", ScrollTrigger.update);
           }
+
+          // Revolver section (non-pinned) reveal.
+          // IMPORTANT: The hero above is pinned. While pinned, the document still scrolls "underneath",
+          // so a normal start like "top 80%" can be reached before the revolver is actually visible.
+          // Workaround: we only ARM the revolver reveal after the pinned hero ScrollTrigger finishes.
+          const armRevolverReveal = (() => {
+            let armed = false;
+            let revolverRevealTl = null;
+
+            return () => {
+              if (armed || !window.ScrollTrigger) return;
+              const revolverSection = document.querySelector(".revolver-parent");
+              if (!revolverSection) return;
+              armed = true;
+
+              const buildRevolverReveal = () => {
+                if (revolverRevealTl) return revolverRevealTl;
+
+                const rightTextEl = revolverSection.querySelector(".right-text h5");
+                const middleSubheadEl = revolverSection.querySelector(".middle-text .subhead");
+                const middleHeadlineEl = revolverSection.querySelector(".middle-text .h4");
+                const middleBtnEl = revolverSection.querySelector(".middle-text .custom-button");
+                const squiggly2El = revolverSection.querySelector(".squiggly-gif-2");
+
+                const rightLines = splitTextElToLines(rightTextEl);
+                const subheadLines = splitTextElToLines(middleSubheadEl);
+                const headlineLines = wrapBrSeparatedLinesToMasks(middleHeadlineEl);
+
+                // Initial states (prevent flash)
+                gsap.set([rightTextEl, middleSubheadEl, middleHeadlineEl, middleBtnEl].filter(Boolean), {
+                  visibility: "hidden",
+                });
+                gsap.set([...rightLines, ...subheadLines, ...headlineLines], { yPercent: 120 });
+                gsap.set(middleBtnEl, { autoAlpha: 0, y: 10 });
+                gsap.set(squiggly2El, { autoAlpha: 0, y: 16, filter: "blur(.694vw)" });
+
+                revolverRevealTl = gsap
+                  .timeline({ paused: true })
+                  .set([rightTextEl, middleSubheadEl, middleHeadlineEl, middleBtnEl].filter(Boolean), { visibility: "visible" }, 0)
+                  .to(squiggly2El, { autoAlpha: 1, y: 0, filter: "blur(0vw)", duration: 0.7, ease: "power3.out" }, 0)
+                  .to(subheadLines, { yPercent: 0, duration: 0.65, ease: "power3.out", stagger: 0.08 }, 0.05)
+                  .to(headlineLines, { yPercent: 0, duration: 0.75, ease: "power3.out", stagger: 0.08 }, 0.12)
+                  .to(middleBtnEl, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.22)
+                  .to(rightLines, { yPercent: 0, duration: 0.75, ease: "power3.out", stagger: 0.03 }, 0.18);
+
+                return revolverRevealTl;
+              };
+
+              // Now that we're armed, this trigger is safe to use.
+              ScrollTrigger.create({
+                trigger: revolverSection,
+                start: "top 80%",
+                onEnter: () => {
+                  const tl = buildRevolverReveal();
+                  tl && tl.play(0);
+                },
+                onEnterBack: () => {
+                  const tl = buildRevolverReveal();
+                  tl && tl.play(0);
+                },
+              });
+            };
+          })();
 
           /* ADDED BY AI START */
           // Test pinning: when the bottom of the preloader section hits the bottom of the viewport,
@@ -1363,6 +1576,8 @@
                   pinSpacing: true,
                   scrub: 1,
                   invalidateOnRefresh: true,
+                  // Arm the next section's reveal only after this pin finishes (prevents early firing).
+                  onLeave: () => armRevolverReveal(),
                 },
               })
                 // Keep globe fully hidden until we're ready to slide it in
@@ -1373,13 +1588,13 @@
                 // Keep the final message hidden until after "WE CHANGE IT / TOGETHER"
                 .set(videoTextFinalEl, { visibility: "hidden" }, 0)
                 .set(videoTextFinalLines, { yPercent: 140 }, 0)
-                // Reset video-text state so it is readable when entering the pin region
-                .set(videoTextEl, { visibility: "visible" }, 0)
-                .set(videoTextInners, { yPercent: 0 }, 0)
+                // Start with the first video-text hidden/offscreen; we'll reveal it as the first pinned phase.
+                .set(videoTextEl, { visibility: "hidden" }, 0)
+                .set(videoTextInners, { yPercent: 140 }, 0)
                 // Abso-content: ensure hidden initially + set initial transforms
                 .set([absoTop, absoMiddle, absoSquiggly, absoGuy, absoTopLeft, absoTopRight, absoBottomRight].filter(Boolean), { visibility: "hidden" }, 0)
                 .set([...absoTopLines, ...absoMiddleLines], { yPercent: 120 }, 0)
-                .set(absoSquiggly, { autoAlpha: 0, y: 16, filter: "blur(10px)" }, 0)
+                .set(absoSquiggly, { autoAlpha: 0, y: 16, filter: "blur(.694vw)" }, 0)
                 // Start the images off-screen (transform only), so they can animate into their final CSS positions.
                 // #guy should come up from bottom (no diagonal), so only Y is offset.
                 .set(absoGuy, { x: 0, y: () => window.innerHeight * 0.65 }, 0)
@@ -1387,9 +1602,12 @@
                 .set(absoTopLeft, { x: () => -window.innerWidth * 0.55, y: () => -window.innerHeight * 0.35 }, 0)
                 .set(absoTopRight, { x: () => window.innerWidth * 0.60, y: () => -window.innerHeight * 0.30 }, 0)
                 .set(absoBottomRight, { x: () => window.innerWidth * 0.55, y: () => window.innerHeight * 0.45 }, 0)
-                // While pinned, HOLD for a bit (so you get a couple scrolls before anything sinks)
-                .to({}, { duration: 1.2 })
-                // First phase: sink each pill into its own "floor" (masked by overflow-hidden on .video-text-pill)
+                // Phase 1: reveal the first pill text AFTER the pin starts (as you scroll)
+                .set(videoTextEl, { visibility: "visible" }, ">0")
+                .to(videoTextInners, { yPercent: 0, duration: 0.55, ease: "none", stagger: 0.1 }, ">0")
+                // Phase 2: hold for a bit so it's readable
+                .to({}, { duration: 0.9 })
+                // Phase 3: sink each pill into its own "floor" (masked by overflow-hidden on .video-text-pill)
                 .to(videoTextInners, { yPercent: 140, duration: 0.7, ease: "none", stagger: 0.1 }, ">0")
                 .set(videoTextEl, { visibility: "hidden" })
                 // Second phase: shrink the video container
@@ -1412,12 +1630,13 @@
                 .set([absoTop, absoMiddle, absoSquiggly, absoGuy, absoTopLeft, absoTopRight, absoBottomRight].filter(Boolean), { visibility: "visible" }, "<0.35")
                 .to(absoTopLines, { yPercent: 0, duration: 0.65, ease: "none", stagger: 0.08 }, "<0.35")
                 .to(absoMiddleLines, { yPercent: 0, duration: 0.65, ease: "none" }, "<0.42")
-                .to(absoSquiggly, { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 0.65, ease: "none" }, "<0.35")
-                // Images fly in with different timings/eases (still smooth under scrub)
-                .to(absoTopLeft, { x: 0, y: 0, duration: 0.9, ease: "power3.out" }, "<0.30")
-                .to(absoTopRight, { x: 0, y: 0, duration: 1.05, ease: "power2.out" }, "<0.38")
-                .to(absoBottomRight, { x: 0, y: 0, duration: 0.95, ease: "power3.out" }, "<0.45")
-                .to(absoGuy, { x: 0, y: 0, duration: 1.1, ease: "power4.out" }, "<0.52")
+                .to(absoSquiggly, { autoAlpha: 1, y: 0, filter: "blur(0vw)", duration: 0.65, ease: "none" }, "<0.35")
+                // Images fly in: Top-left + Bottom-right together, then Guy + Top-right
+                // Easing goal: fast acceleration -> slow brake (strong ease-out), with each image having its own feel.
+                .to(absoTopLeft, { x: 0, y: 0, duration: 0.9, ease: "expo.out" }, "<0.30")
+                .to(absoBottomRight, { x: 0, y: 0, duration: 0.95, ease: "power4.out" }, "<0.30")
+                .to(absoGuy, { x: 0, y: 0, duration: 1.05, ease: "power4.out" }, "<0.52")
+                .to(absoTopRight, { x: 0, y: 0, duration: 1.0, ease: "circ.out" }, "<0.52")
                 // After globe, reveal the new 2-line pill text (masked up into view)
                 .set(videoTextNextEl, { visibility: "visible" }, ">0")
                 .to(videoTextNextInners, { yPercent: 0, duration: 0.7, ease: "none", stagger: 0.1 }, ">0")
@@ -1442,7 +1661,65 @@
           }
         }
 
+        // Global cursor parallax for floating abso-content assets.
+        // Important: apply transforms to inner <img> so ScrollTrigger can keep controlling the container position.
+        function initAbsoHoverMicro() {
+          if (!window.gsap) return;
+          const finePointer =
+            window.matchMedia &&
+            window.matchMedia("(pointer: fine)").matches;
+          if (!finePointer) return;
+
+          // Controls you can tweak (per element):
+          // - x/y: strength multiplier (use negatives to invert direction)
+          // - duration/ease: how "floaty" the follow feels
+          const PARALLAX_BASE = { x: 23, y: 17 }; // px, global strength
+          const PARALLAX = {
+            ".abso-content #top-left": { x: 1.05, y: 1.0, duration: 0.55, ease: "power3.out" },
+            ".abso-content #bottom-right": { x: 1.1, y: 1.05, duration: 0.6, ease: "power4.out" },
+            ".abso-content #topright": { x: 0.9, y: 0.85, duration: 0.55, ease: "circ.out" },
+            ".abso-content #guy": { x: 0.75, y: 0.7, duration: 0.7, ease: "power3.out" },
+            ".abso-content .squiggly-gif-container": { x: 1.25, y: 1.15, duration: 0.5, ease: "expo.out" },
+          };
+
+          const items = Object.entries(PARALLAX)
+            .map(([selector, cfg]) => {
+              const el = document.querySelector(selector);
+              if (!el) return null;
+              const target = el.querySelector("img") || el;
+              target.style.willChange = "transform";
+              return {
+                target,
+                cfg,
+                xTo: gsap.quickTo(target, "x", { duration: cfg.duration, ease: cfg.ease }),
+                yTo: gsap.quickTo(target, "y", { duration: cfg.duration, ease: cfg.ease }),
+              };
+            })
+            .filter(Boolean);
+
+          const onMove = (e) => {
+            const nx = (e.clientX / Math.max(1, window.innerWidth) - 0.5) * 2;  // -1..1
+            const ny = (e.clientY / Math.max(1, window.innerHeight) - 0.5) * 2; // -1..1
+            items.forEach(({ xTo, yTo, cfg }) => {
+              xTo(nx * PARALLAX_BASE.x * cfg.x);
+              yTo(ny * PARALLAX_BASE.y * cfg.y);
+            });
+          };
+
+          const reset = () => {
+            items.forEach(({ xTo, yTo }) => {
+              xTo(0);
+              yTo(0);
+            });
+          };
+
+          window.addEventListener("pointermove", onMove, { passive: true });
+          window.addEventListener("pointerleave", reset);
+          window.addEventListener("blur", reset);
+        }
+
         runPreloader().then(initLenis);
+        initAbsoHoverMicro();
         /* ADDED BY AI END */
       });
     })();
