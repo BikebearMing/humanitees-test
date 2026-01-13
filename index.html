@@ -1485,7 +1485,9 @@
           // Workaround: we only ARM the revolver reveal after the pinned hero ScrollTrigger finishes.
           const armRevolverReveal = (() => {
             let armed = false;
-            let revolverRevealTl = null;
+            let middleRevealTl = null;
+            let sideRevealTl = null;
+            let builtCache = null;
 
             return () => {
               if (armed || !window.ScrollTrigger) return;
@@ -1494,7 +1496,7 @@
               armed = true;
 
               const buildRevolverReveal = () => {
-                if (revolverRevealTl) return revolverRevealTl;
+                if (builtCache) return builtCache;
 
                 const rightTextEl = revolverSection.querySelector(".right-text h5");
                 const middleSubheadEl = revolverSection.querySelector(".middle-text .subhead");
@@ -1506,37 +1508,100 @@
                 const subheadLines = splitTextElToLines(middleSubheadEl);
                 const headlineLines = wrapBrSeparatedLinesToMasks(middleHeadlineEl);
 
-                // Initial states (prevent flash)
-                gsap.set([rightTextEl, middleSubheadEl, middleHeadlineEl, middleBtnEl].filter(Boolean), {
-                  visibility: "hidden",
-                });
-                gsap.set([...rightLines, ...subheadLines, ...headlineLines], { yPercent: 120 });
-                gsap.set(middleBtnEl, { autoAlpha: 0, y: 10 });
-                gsap.set(squiggly2El, { autoAlpha: 0, y: 16, filter: "blur(.694vw)" });
+                const resetMiddle = () => {
+                  gsap.set([middleSubheadEl, middleHeadlineEl, middleBtnEl].filter(Boolean), { visibility: "hidden" });
+                  gsap.set([...subheadLines, ...headlineLines], { yPercent: 120 });
+                  gsap.set(middleBtnEl, { autoAlpha: 0, y: 10 });
+                  if (middleRevealTl) middleRevealTl.pause(0);
+                };
 
-                revolverRevealTl = gsap
+                const resetSide = () => {
+                  gsap.set([rightTextEl].filter(Boolean), { visibility: "hidden" });
+                  gsap.set(rightLines, { yPercent: 120 });
+                  gsap.set(squiggly2El, { autoAlpha: 0, y: 16, filter: "blur(.694vw)" });
+                  if (sideRevealTl) sideRevealTl.pause(0);
+                };
+
+                const resetAll = () => {
+                  resetMiddle();
+                  resetSide();
+                };
+
+                // Hidden baseline
+                resetAll();
+
+                middleRevealTl = gsap
                   .timeline({ paused: true })
-                  .set([rightTextEl, middleSubheadEl, middleHeadlineEl, middleBtnEl].filter(Boolean), { visibility: "visible" }, 0)
-                  .to(squiggly2El, { autoAlpha: 1, y: 0, filter: "blur(0vw)", duration: 0.7, ease: "power3.out" }, 0)
+                  .set([middleSubheadEl, middleHeadlineEl, middleBtnEl].filter(Boolean), { visibility: "visible" }, 0)
                   .to(subheadLines, { yPercent: 0, duration: 0.65, ease: "power3.out", stagger: 0.08 }, 0.05)
                   .to(headlineLines, { yPercent: 0, duration: 0.75, ease: "power3.out", stagger: 0.08 }, 0.12)
-                  .to(middleBtnEl, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.22)
-                  .to(rightLines, { yPercent: 0, duration: 0.75, ease: "power3.out", stagger: 0.03 }, 0.18);
+                  .to(middleBtnEl, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.22);
 
-                return revolverRevealTl;
+                sideRevealTl = gsap
+                  .timeline({ paused: true })
+                  .set([rightTextEl].filter(Boolean), { visibility: "visible" }, 0)
+                  .to(squiggly2El, { autoAlpha: 1, y: 0, filter: "blur(0vw)", duration: 0.7, ease: "power3.out" }, 0)
+                  .to(rightLines, { yPercent: 0, duration: 0.75, ease: "power3.out", stagger: 0.03 }, 0.12);
+
+                builtCache = {
+                  middleRevealTl,
+                  sideRevealTl,
+                  resetMiddle,
+                  resetSide,
+                  resetAll,
+                  squiggly2El,
+                };
+                return builtCache;
               };
 
-              // Now that we're armed, this trigger is safe to use.
+              // Now that we're armed, these triggers are safe to use.
               ScrollTrigger.create({
                 trigger: revolverSection,
-                start: "top 80%",
+                start: "top 50%",
                 onEnter: () => {
-                  const tl = buildRevolverReveal();
-                  tl && tl.play(0);
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetMiddle && built.resetMiddle();
+                  built.middleRevealTl && built.middleRevealTl.play(0);
                 },
                 onEnterBack: () => {
-                  const tl = buildRevolverReveal();
-                  tl && tl.play(0);
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetMiddle && built.resetMiddle();
+                  built.middleRevealTl && built.middleRevealTl.play(0);
+                },
+              });
+
+              // Later trigger for the right-text + squiggly (uses the element itself as trigger)
+              ScrollTrigger.create({
+                trigger: revolverSection.querySelector(".squiggly-gif-2") || revolverSection.querySelector(".right-text") || revolverSection,
+                start: "top 80%",
+                onEnter: () => {
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetSide && built.resetSide();
+                  built.sideRevealTl && built.sideRevealTl.play(0);
+                },
+                onEnterBack: () => {
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetSide && built.resetSide();
+                  built.sideRevealTl && built.sideRevealTl.play(0);
+                },
+              });
+
+              // Global reset when the entire revolver section leaves the viewport.
+              ScrollTrigger.create({
+                trigger: revolverSection,
+                start: "top bottom",
+                end: "bottom top",
+                onLeave: () => {
+                  const built = buildRevolverReveal();
+                  built && built.resetAll && built.resetAll();
+                },
+                onLeaveBack: () => {
+                  const built = buildRevolverReveal();
+                  built && built.resetAll && built.resetAll();
                 },
               });
             };
