@@ -7,6 +7,7 @@
   <title>Latest</title>
   <!-- ADDED BY AI START -->
   <link rel="stylesheet" href="https://use.typekit.net/cdf4adh.css">
+  <link rel="stylesheet" href="styles.css">
   <!-- ADDED BY AI END -->
   <script>
     /* ADDED BY AI START */
@@ -28,809 +29,7 @@
     /* ADDED BY AI END */
   </script>
 </head>
-<style>
-  :root {
-    --revolver-angle: 30deg;
-    /* Revolver rotation range over a full page scroll (increase magnitude = faster spin) */
-    --revolver-rotation-range: -360deg;
-    --white: #F9F4F1;
-    --black: #333333;
-    --futura-cond: "Futura Cond", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
-    --moret-variable: "moret-variable", serif;
-  }
-
-  /* Futura Cond from futura-cond_uEZPE.zip */
-  @font-face {
-    font-family: "Futura Cond";
-    src: url("./assets/fonts/FuturaCond-Medium.otf") format("opentype");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Futura Cond";
-    src: url("./assets/fonts/FuturaCond-MediumItalic.otf") format("opentype");
-    font-weight: 500;
-    font-style: italic;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Futura Cond";
-    src: url("./assets/fonts/FuturaCond-Bold.otf") format("opentype");
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: "Futura Cond";
-    src: url("./assets/fonts/FuturaCond-BoldItalic.otf") format("opentype");
-    font-weight: 700;
-    font-style: italic;
-    font-display: swap;
-  }
-
-
-  html {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    overflow-x: clip;
-    scrollbar-gutter: stable;
-  }
-
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: var(--white);
-    overflow-x: clip;
-    font-family: "Futura Cond", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-    transition: overflow 0.3s ease-in-out;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-    font-family: var(--futura-cond);
-  }
-  .custom-button {
-    padding-block: .417vw;
-    padding-inline: .764vw;
-    border: .069vw solid #333;
-    background:  #FF944D;
-    border-radius: 1.736vw;
-    font-size: .833vw;;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: -0.025vw;
-    text-transform: uppercase;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0;
-  }
-
-  /* ADDED BY AI START */
-  /* Locks scrolling while the preloader runs */
-  body.is-loading {
-    overflow: hidden;
-    height: 100vh;
-    padding-right: var(--sbw, 0vw);
-  }
-
-  /* ADDED BY AI END */
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .h1 {
-    font-family: var(--moret-variable);
-    font-size: 20.021vw;
-    font-weight: 300;
-    line-height: 0.8;
-    letter-spacing: -1.001vw;
-    text-transform: uppercase;
-    margin: 0;
-    color: var(--black);
-  }
-
-
-  .h2 {
-    font-size: 4.861vw;
-    font-weight: 700;
-    line-height: 0.85;
-    letter-spacing: -0.243vw;
-    text-transform: uppercase;
-    color: white;
-  }
-
-
-
-  .h4 {
-    font-size: 2.778vw;
-    line-height: 0.85;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: -0.139vw;
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .triple-line {
-    width: 100%;
-    height: 100%;
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 50vw;
-      height: 100%;
-      background: url('./assets/tripleline.png') no-repeat center center;
-    }
-  }
-
-  .revolver-parent {
-    width: 100%;
-    min-height: 91.736vw;
-    position: relative;
-    background-color: #333;
-    overflow-x: clip;
-
-    & .right-text {
-      max-width: 9.792vw;
-      position: absolute;
-      right: 14.653vw;
-      top: 48.056vw;
-      z-index: 5;
-
-      & h5 {
-        text-transform: uppercase;
-        
-      }
-    }
-
-    & .squiggly-gif-2 {
-      position: absolute;
-      top: 38.958vw;
-      left: 9.444vw;
-      width: 21.52vw;
-      height: 21.52vw;
-      z-index: 4;
-    }
-
-    & .middle-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.042vw;
-      text-wrap: nowrap;
-
-      & .dollar-icon {
-        width: 1em;
-        height: 1em;
-        display: inline-block;
-        margin-inline: 0.3em;
-    }
-  }
-
-}
-
-.dark {
-  color: white;
-}
-
-  /* outer wrapper: stays centered, never rotates */
-  .revolver-center {
-    position: absolute;
-    top: 4.375vw;
-    left: 50%;
-    transform: translate3d(-50%, 0, 0);
-    width: 60.944vw;
-    aspect-ratio: 1/1;
-
-  }
-
-  /* inner wrapper: rotates in-place */
-  .revolver-wrapper {
-    width: 100%;
-    height: 100%;
-    transform: rotate(calc(var(--progress, 0) * var(--revolver-rotation-range)));
-    transform-origin: 50% 50%;
-    will-change: transform;
-  }
-
-  .revolver-item {
-    width: 10.126vw;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate3d(-50%, 0, 0) rotate(calc(var(--revolver-angle) * var(--revolver-index)));
-  }
-
-  /* plain CSS (the `& img {}` nesting only works in SCSS) */
-  .revolver-item img {
-    height: unset;
-    width: 100%;
-  }
-
-
-  .grain-effect {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    overflow: hidden;
-    isolation: isolate;
-  }
-
-  .grain-effect::after {
-    content: '';
-    position: absolute;
-    top: -5%;
-    left: -5%;
-    ;
-    width: 110%;
-    height: 110%;
-    opacity: .35;
-    background-image: repeating-conic-gradient(var(--black) 0%, transparent .00003%, transparent .0005%, transparent .00095%), repeating-conic-gradient(var(--black) 0%, transparent .00005%, transparent 0.00015%, transparent 0.0009%);
-    background-size: cover;
-    animation: grain 0.5s steps(1) infinite;
-    z-index: 0;
-    pointer-events: none;
-    transform: scale(2);
-    /* try 1.5 → 3 */
-    transform-origin: center;
-  }
-
-  .triple-line::before {
-    z-index: 1;
-    /* above grain, below content */
-    pointer-events: none;
-  }
-
-  /* lift only the section’s immediate content */
-  .grain-effect>* {
-    position: relative;
-    z-index: 2;
-  }
-
-
-
-
-
-  @keyframes grain {
-
-    0%,
-    100% {
-      transform: translate(0, 0);
-    }
-
-    10% {
-      transform: translate(-1%, -1%);
-    }
-
-    20% {
-      transform: translate(1%, 1%);
-    }
-
-    30% {
-      transform: translate(-2%, -2%);
-    }
-
-    40% {
-      transform: translate(3%, 3%);
-    }
-
-    50% {
-      transform: translate(-3%, -3%);
-    }
-
-    60% {
-      transform: translate(4%, 4%);
-    }
-
-    70% {
-      transform: translate(-4%, -4%);
-    }
-
-    80% {
-      transform: translate(2%, 2%);
-    }
-
-    90% {
-      transform: translate(-3%, -3%);
-    }
-  }
-
-
-
-  .preloader-to-banner {
-    width: 100%;
-    min-height: 100vh;
-    height: 72.986vw;
-    /* ADDED BY AI START */
-    /* Full-screen overlay so user cannot scroll to content underneath */
-    /* position: fixed;
-    inset: 0;
-    z-index: 9999; */
-    /* If you keep it non-fixed for now, we still need it positioned so the progress bar can sit at the bottom */
-    position: relative;
-    /* ADDED BY AI END */
-    background-color: var(--white);
-
-    & .wrapper {
-      width: 100%;
-      height: 100%;
-
-      & .preloader {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.042vw;
-        padding-top: 7.111vw;
-
-        & .gif-effect {
-          position: absolute;
-          top: 6.944vw;
-          left: 44.097vw;
-          width: 12.995vw;
-          height: 19.779vw;
-          will-change: transform;
-          transform: translateZ(0);
-
-          & img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-          }
-        }
-
-
-        & .opening-header {
-          max-width: 23.486vw;
-          position: absolute;
-          top: 30vw;
-          max-width: 23.486vw;
-
-          & h4 {
-            text-align: center;
-          }
-        }
-      }
-
-
-    }
-  }
-
-  /* "gif" frame state (used by JS) */
-  .gif-effect img.is-active {
-    opacity: 1 !important;
-  }
-
-  /* ADDED BY AI START */
-  /*
-    IMPORTANT:
-    You currently have SCSS-style nesting in this file (selectors using `&`).
-    Browsers ignore that in a normal <style> tag, which can cause .gif-effect to have no sizing,
-    and images to end up invisible (height: 100% of an auto/0-height parent).
-
-    These are plain-CSS overrides to ensure the preloader + gif frames always render.
-  */
-  .preloader-to-banner>.wrapper {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-
-  .preloader-to-banner .abso-content {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: clip;
-    z-index: 3;
-
-    &>* {
-      position: absolute;
-      z-index: 3;
-    }
-
-    & .top-texts {
-      display: flex;
-      gap: 20.833vw;
-      left: 0.694vw;
-      top: 27.361vw;
-
-    }
-
-    & .middle-text {
-      max-width: 6.806vw;
-      left: 6.042vw;
-      bottom: 17.014vw;
-    }
-
-    & #guy {
-      width: 18.965vw;
-      height: 41.806vw;
-      bottom: -17.847vw;
-      left: 12.917vw;
-    }
-
-    & #top-left {
-      width: 36.736vw;
-      height: 24.167vw;
-      top: 29.361vw;
-      left: -3.958vw;
-    }
-
-    & #topright {
-      height: 31.582vw;
-      top: 24.361vw;
-      right: -10.417vw;
-    }
-
-    & #bottom-right {
-      width: 33.666vw;
-      height: 26.228vw;
-      bottom: -10.903vw;
-      right: -5.694vw;
-    }
-
-    & .squiggly-gif-container {
-      width: 13.264vw;
-      height: 15.972vw;
-      top: 24.833vw;
-      right: 29.583vw;
-
-    }
-
-
-
-  }
-
-  /* ADDED BY AI START */
-  /* Abso-content reveal (mask up for text, blur+fade+up for squiggly) */
-  .preloader-to-banner .abso-content .top-texts,
-  .preloader-to-banner .abso-content .middle-text,
-  .preloader-to-banner .abso-content .squiggly-gif-container,
-  .preloader-to-banner .abso-content #guy,
-  .preloader-to-banner .abso-content #top-left,
-  .preloader-to-banner .abso-content #topright,
-  .preloader-to-banner .abso-content #bottom-right {
-    visibility: hidden;
-    /* prevent flash before GSAP runs */
-  }
-
-  .preloader-to-banner .abso-content .top-texts h6,
-  .preloader-to-banner .abso-content .middle-text h6 {
-    overflow: hidden;
-    /* mask floor */
-  }
-
-  .preloader-to-banner .abso-content .abso-line {
-    display: block;
-    will-change: transform;
-  }
-
-  .preloader-to-banner .abso-content #guy,
-  .preloader-to-banner .abso-content #top-left,
-  .preloader-to-banner .abso-content #topright,
-  .preloader-to-banner .abso-content #bottom-right {
-    will-change: transform;
-  }
-
-  /* ADDED BY AI END */
-
-  .preloader-to-banner .preloader {
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.042vw;
-    padding-top: 7.111vw;
-    overflow-y: clip;
-  }
-
-
-  .preloader-to-banner .gif-effect img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-
-  }
-
-  .progress {
-    position: absolute;
-    top: 45.083vw;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .preloader-to-banner .gif-effect img.is-active {
-    opacity: 1;
-  }
-
-  /* ADDED BY AI START */
-  /* Generic mask helper for text reveal/hide animations */
-  .mask {
-    overflow: hidden;
-    overflow-x: visible !important;
-  }
-
-  /* Ensure masked text animates cleanly */
-  .mask>* {
-    display: block;
-    will-change: transform;
-  }
-
-  /* Line-by-line masking (each line gets its own overflow-hidden wrapper) */
-  .mask .line-mask {
-    overflow: hidden;
-    overflow-x: visible !important;
-  }
-
-  .mask .line {
-    display: block;
-    will-change: transform;
-  }
-
-  /* ADDED BY AI END */
-
-  .hero-banner {
-    width: 100%;
-    height: 100%;
-
-    & .wrapper {
-      width: 100%;
-      height: 100%;
-
-
-      & .top {
-        position: absolute;
-        top: 4.583vw;
-        left: 0.694vw;
-      }
-    }
-  }
-
-  /* ADDED BY AI START */
-  /*
-    Plain-CSS override for hero banner (your `&` nesting above is SCSS syntax and won't apply in a normal <style> tag).
-    This ensures the banner headline positioning works.
-  */
-  .preloader-to-banner .hero-banner {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
-  }
-
-  .preloader-to-banner .hero-banner .wrapper {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-
-  .preloader-to-banner .hero-banner .top {
-    position: absolute;
-    top: 4.2vw;
-    left: 11.269vw;
-    overflow-x: visible;
-  }
-
-  .preloader-to-banner .hero-banner .bottom {
-    & .opening-video {
-      width: 97.917vw;
-      height: 45.833vw;
-      margin-inline: auto;
-      transform: translateY(110%);
-      background: transparent;
-      line-height: 0;
-      font-size: 0;
-      display: block;
-      will-change: transform, height, width;
-      transform: translateZ(0);
-    }
-  }
-
-  video {
-    display: block;
-    width: 97.917vw;
-    height: 45.833vw;
-    object-fit: cover;
-    will-change: transform;
-    transform: translateZ(0);
-
-  }
-
-  /* ADDED BY AI END */
-
-  /* ADDED BY AI START */
-  /*
-    Ensure the opening video is actually visible/positioned.
-    The rule above uses nested selectors; modern browsers may support it, but GSAP can "inherit" the transform
-    and turn it into extra translateY pixels (causing the video to stay off-screen).
-
-    These overrides:
-    - pin the bottom area
-    - apply sizing with a plain selector
-    - avoid a CSS transform so GSAP fully controls the Y movement
-  */
-  .preloader-to-banner .hero-banner .bottom {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-  }
-
-  .preloader-to-banner .hero-banner .bottom .opening-video {
-    width: 97.917vw;
-    height: 45.833vw;
-    margin-inline: auto;
-    pointer-events: auto;
-    transform: none;
-    overflow: hidden;
-    border-radius: 0;
-    will-change: width, height, border-radius;
-    position: relative;
-  }
-
-  /* ADDED BY AI START */
-  /* Plain CSS for the video-text overlay (your nested `&` version may not apply depending on browser) */
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text {
-    position: absolute;
-    top: 6.875vw;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    will-change: transform;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ADDED BY AI START */
-  /* Hidden by default; revealed via GSAP after globe animation */
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text.video-text-next {
-    visibility: hidden;
-  }
-
-  /* ADDED BY AI END */
-
-  /* ADDED BY AI START */
-  /* Final message (H2) overlay */
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text-final {
-    position: absolute;
-    top: 6.875vw;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
-    visibility: hidden;
-    text-align: center;
-  }
-
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text-final .line-mask {
-    display: block;
-    overflow: hidden;
-  }
-
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text-final .line {
-    display: block;
-    will-change: transform;
-  }
-
-  /* ADDED BY AI END */
-
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text .video-text-pill {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    /* mask "floor" */
-  }
-
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text .video-text-inner {
-    position: relative;
-    will-change: transform;
-  }
-
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text .video-text-bg {
-    position: absolute;
-    inset: 0;
-    background: var(--white);
-    z-index: 0;
-  }
-
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text .video-text-text {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    color: var(--black);
-  }
-
-  .preloader-to-banner .hero-banner .bottom .opening-video .video-text img {
-    width: 1em;
-    height: 1em;
-    object-fit: cover;
-    display: inline-block;
-    vertical-align: -0.1em;
-  }
-
-  /* ADDED BY AI END */
-
-  /* ADDED BY AI START */
-  /* Globe overlay styling */
-  .preloader-to-banner .hero-banner .bottom .opening-video .globe {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translate(-50%, 0);
-    width: 48.958vw;
-    height: 25.556vw;
-    z-index: 2;
-    pointer-events: none;
-    visibility: hidden;
-    will-change: transform;
-  }
-
-  /* ADDED BY AI END */
-
-  .video-text {
-    position: absolute;
-    top: 6.875vw;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-
-    & h4 {
-      text-align: center;
-      background: #F9F4F1;
-      padding: 0.556vw;
-
-      & img {
-        width: 1em;
-        height: 1em;
-        object-fit: cover;
-        display: inline-block;
-      }
-    }
-  }
-</style>
 
 <body>
   <section class="preloader-to-banner grain-effect triple-line">
@@ -1038,6 +237,14 @@
         <div style="--revolver-index: 11;" class="revolver-item">
           <img src="./assets/Group 54.png" alt="" />
         </div>
+      </div>
+    </div>
+
+    <div class="pinning-wrapper">
+      <div class="pinning-content">
+        <img src="./assets/invitation-behind.png" alt="">
+        <img src="./assets/crop wax 1.png" alt="">
+        <img src="./assets/revolver-bottom-pin-bg.png" alt="">
       </div>
     </div>
   </div>
@@ -1270,13 +477,9 @@
             // before adding is-loading
             const sbw = window.innerWidth - document.documentElement.clientWidth;
             document.documentElement.style.setProperty("--sbw", sbw + "px");
-            document.body.classList.add("is-loading");
-
-            // when unlocking
-            document.body.classList.remove("is-loading");
-            document.documentElement.style.removeProperty("--sbw");
 
             if (!preloaderSection || frames.length === 0 || !progressEl) {
+              document.documentElement.style.removeProperty("--sbw");
               resolve();
               return;
             }
@@ -1309,6 +512,7 @@
                 setActiveFrame(0);
                 progressEl.textContent = "100%";
                 document.body.classList.remove("is-loading");
+                document.documentElement.style.removeProperty("--sbw");
                 window.__preloaderDone = true;
                 resolve({ preloaderSection, frames, progressEl });
               }, 2500);
@@ -1428,6 +632,7 @@
               })
               .call(() => {
                 document.body.classList.remove("is-loading");
+                document.documentElement.style.removeProperty("--sbw");
                 window.__preloaderDone = true;
                 resolve({ preloaderSection, frames, progressEl });
               });
@@ -1436,7 +641,6 @@
 
         function initLenis() {
           if (!window.Lenis) {
-            console.log("[Lenis] not found on window");
             return;
           }
 
@@ -1446,8 +650,6 @@
             smoothTouch: true,
             gestureOrientation: "vertical",
           });
-          console.log("Lenis loaded?", !!window.Lenis);
-          console.log("Lenis instance", lenis);
 
           // Drive your CSS variable (--progress) from Lenis' animated scroll position.
           // This sets progress 0..1 over the whole page scroll range.
@@ -1459,8 +661,6 @@
             Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 
           lenis.on("scroll", (e) => {
-            console.log("lenis scroll", e.animatedScroll);
-
             if (revolverWrapper) {
               const progress = clamp01(e.animatedScroll / getMaxScroll());
               revolverWrapper.style.setProperty(
@@ -1488,6 +688,11 @@
             let middleRevealTl = null;
             let sideRevealTl = null;
             let builtCache = null;
+            // Section-visit state: only replay animations after the user scrolls OUTSIDE the section
+            // (not merely when individual elements leave/re-enter the viewport).
+            let insideSection = false;
+            let middlePlayedThisVisit = false;
+            let sidePlayedThisVisit = false;
 
             return () => {
               if (armed || !window.ScrollTrigger) return;
@@ -1554,54 +759,75 @@
                 return builtCache;
               };
 
-              // Now that we're armed, these triggers are safe to use.
-              ScrollTrigger.create({
-                trigger: revolverSection,
-                start: "top 50%",
-                onEnter: () => {
-                  const built = buildRevolverReveal();
-                  if (!built) return;
-                  built.resetMiddle && built.resetMiddle();
-                  built.middleRevealTl && built.middleRevealTl.play(0);
-                },
-                onEnterBack: () => {
-                  const built = buildRevolverReveal();
-                  if (!built) return;
-                  built.resetMiddle && built.resetMiddle();
-                  built.middleRevealTl && built.middleRevealTl.play(0);
-                },
-              });
-
-              // Later trigger for the right-text + squiggly (uses the element itself as trigger)
-              ScrollTrigger.create({
-                trigger: revolverSection.querySelector(".squiggly-gif-2") || revolverSection.querySelector(".right-text") || revolverSection,
-                start: "top 80%",
-                onEnter: () => {
-                  const built = buildRevolverReveal();
-                  if (!built) return;
-                  built.resetSide && built.resetSide();
-                  built.sideRevealTl && built.sideRevealTl.play(0);
-                },
-                onEnterBack: () => {
-                  const built = buildRevolverReveal();
-                  if (!built) return;
-                  built.resetSide && built.resetSide();
-                  built.sideRevealTl && built.sideRevealTl.play(0);
-                },
-              });
-
-              // Global reset when the entire revolver section leaves the viewport.
+              // Section lifecycle: reset ONLY when scroll is outside the section.
+              // While inside, elements should not reset/replay just because they leave the viewport.
               ScrollTrigger.create({
                 trigger: revolverSection,
                 start: "top bottom",
                 end: "bottom top",
+                onEnter: () => {
+                  insideSection = true;
+                  middlePlayedThisVisit = false;
+                  sidePlayedThisVisit = false;
+                },
+                onEnterBack: () => {
+                  insideSection = true;
+                  middlePlayedThisVisit = false;
+                  sidePlayedThisVisit = false;
+                },
                 onLeave: () => {
+                  insideSection = false;
                   const built = buildRevolverReveal();
                   built && built.resetAll && built.resetAll();
                 },
                 onLeaveBack: () => {
+                  insideSection = false;
                   const built = buildRevolverReveal();
                   built && built.resetAll && built.resetAll();
+                },
+              });
+
+              // Middle text: play once per section visit
+              ScrollTrigger.create({
+                trigger: revolverSection,
+                start: "top 50%",
+                onEnter: () => {
+                  if (!insideSection || middlePlayedThisVisit) return;
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetMiddle && built.resetMiddle();
+                  built.middleRevealTl && built.middleRevealTl.play(0);
+                  middlePlayedThisVisit = true;
+                },
+                onEnterBack: () => {
+                  if (!insideSection || middlePlayedThisVisit) return;
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetMiddle && built.resetMiddle();
+                  built.middleRevealTl && built.middleRevealTl.play(0);
+                  middlePlayedThisVisit = true;
+                },
+              });
+
+              // Right text + squiggly: play once per section visit
+              ScrollTrigger.create({
+                trigger: revolverSection.querySelector(".squiggly-gif-2") || revolverSection.querySelector(".right-text") || revolverSection,
+                start: "top 80%",
+                onEnter: () => {
+                  if (!insideSection || sidePlayedThisVisit) return;
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetSide && built.resetSide();
+                  built.sideRevealTl && built.sideRevealTl.play(0);
+                  sidePlayedThisVisit = true;
+                },
+                onEnterBack: () => {
+                  if (!insideSection || sidePlayedThisVisit) return;
+                  const built = buildRevolverReveal();
+                  if (!built) return;
+                  built.resetSide && built.resetSide();
+                  built.sideRevealTl && built.sideRevealTl.play(0);
+                  sidePlayedThisVisit = true;
                 },
               });
             };
