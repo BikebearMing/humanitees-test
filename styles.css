@@ -188,49 +188,7 @@ img {
     overflow-x: clip;
     overflow-y: clip;
 
-    & .pinning-wrapper {
-        width: 63.477vw;
-        height: 43.75vw;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: -20.972vw;
-
-
-        & .pinning-content {
-            width: 100%;
-            height: 100%;
-            position: relative;
-
-            & img {
-                position: absolute;
-            }
-
-            & img:first-child {
-
-                width: 57.639vw;
-                height: 41.042vw;
-                left: 0;
-                top: 0;
-
-            }
-
-            & img:nth-child(2) {
-
-                width: 12.083vw;
-                height: 10.972vw;
-                top: 6.25vw;
-                left: 1.597vw;
-            }
-
-            & img:nth-child(3) {
-                width: 48.958vw;
-                height: 26.042vw;
-                right: 3.681vw;
-                top: 2.708vw;
-            }
-        }
-    }
+    
 }
 
 .revolver-parent .right-text {
