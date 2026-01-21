@@ -80,6 +80,8 @@ a {
     line-height: 1;
     letter-spacing: -0.025vw;
     text-transform: uppercase;
+    max-width: fit-content;
+    margin-inline: auto;
 }
 
 h1,
@@ -184,11 +186,81 @@ img {
     width: 100%;
     min-height: 91.736vw;
     position: relative;
-    background-color: #333;
+    background-color: #1b1b1b;
     overflow-x: clip;
     overflow-y: clip;
 
     
+}
+
+.revolver-parent .invitation {
+    position: absolute;
+    width: 100vw;
+    height: 110vh;
+    bottom: 0;
+    z-index: 10;
+
+    &  p.dark {
+        margin: unset;
+
+    }
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    & .after-fullw-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+
+    & .center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        & * {
+            text-align: center;
+        }
+    }
+
+    & img {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 21.528vw;
+height: 21.528vw;
+    }
+}
+}
+
+.revolver-parent #wax {
+    position: absolute;
+    bottom: 1.986vw;
+    left: 18.264vw;
+    width: 12.083vw;
+    height: 10.972vw;
+    z-index: 2;
+}
+
+.revolver-parent #paper {
+    position: absolute;
+    bottom: 2.986vw;
+    left: 18.264vw;
+    width: 57.639vw;
+height: 41.042vw;
+bottom: -19.875vw;
+left: 20.278vw;
+z-index: 1;
 }
 
 .revolver-parent .right-text {
@@ -701,7 +773,7 @@ video {
     height: 100vh;
     overflow: hidden;
     position: relative;
-    background: #333333;
+    background: #1b1b1b;
 }
 .clonable-prefooter .container {
     display: flex;
@@ -747,6 +819,14 @@ video {
     width: 100vw;
     height: 48.611vw;
     position: absolute;
+    top: 0;
+    left: 0;
     pointer-events: none;
     z-index: 1;
+}
+
+/* Hide img when it has no src to prevent browser's broken-image border */
+.clonable-prefooter .lottie-animation:not([src]),
+.clonable-prefooter .lottie-animation[src=""] {
+    visibility: hidden;
 }
