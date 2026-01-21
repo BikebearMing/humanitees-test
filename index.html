@@ -8,6 +8,21 @@
   <!-- ADDED BY AI START -->
   <link rel="stylesheet" href="https://use.typekit.net/cdf4adh.css">
   <link rel="stylesheet" href="styles.css">
+  <!-- Handwriting font for Lottie animation fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Font fallback for Lottie animation */
+    @font-face {
+      font-family: 'AdobeHandwriting-Frank';
+      src: local('Caveat'), local('Caveat-Regular');
+    }
+    @font-face {
+      font-family: 'Adobe Handwriting';
+      src: local('Caveat'), local('Caveat-Regular');
+    }
+  </style>
   <!-- ADDED BY AI END -->
   <script>
     /* ADDED BY AI START */
@@ -32,7 +47,11 @@
 
 
 <body>
-  <section class="preloader-to-banner grain-effect triple-line">
+  <div class="grain-overlay"></div>
+  
+
+  <section class="preloader-to-banner grain-effect">
+  
     <div class="wrapper">
       <div class="preloader">
         <div class="gif-effect">
@@ -62,7 +81,7 @@
         </div>
       </div>
 
-      <div class="hero-banner">
+      <div class="hero-banner has-triple-line">
         <div class="wrapper">
           <div class="top">
             <!-- ADDED BY AI START -->
@@ -180,7 +199,7 @@
   </section>
 
 
-  <div class="revolver-parent triple-line grain-effect">
+  <div class="revolver-parent has-triple-line line-black grain-effect">
 
     <div class="squiggly-gif-2">
       <img src="./assets/Stand together.gif" alt="">
@@ -244,10 +263,27 @@
       <div class="pinning-content">
         <img src="./assets/invitation-behind.png" alt="">
         <img src="./assets/crop wax 1.png" alt="">
-        <img src="./assets/revolver-bottom-pin-bg.png" alt="">
+        <img id="pinning-bg" src="./assets/revolver-bottom-pin-bg.png" alt="">
       </div>
     </div>
   </div>
+
+
+<section class="clonable-prefooter has-triple-line line-black">
+  <img id="stand-together-gif" class="lottie-animation" alt="">
+        <div class="container">
+            <h1 class="h1">Join The <br>Movement</h1>
+            
+        </div>
+    
+        <div class="medias">
+            <!-- Only include images that actually exist in /assets -->
+            <img src="./assets/clonable-prefooter-1.png" alt="">
+            <img src="./assets/clonable-prefooter-2.png" alt="">
+            <img src="./assets/clonable-prefooter-3.png" alt="">
+            <img src="./assets/clonable-prefooter-4.png" alt="">
+        </div>
+    </section>
 
   <!-- Lenis + GSAP -->
   <!-- Lenis (CDN fallback: jsDelivr -> unpkg) -->
@@ -270,6 +306,59 @@
       }
 
       onReady(function () {
+        /* ADDED BY AI START */
+        // Triple-line injection + reveal (delayed until AFTER the preloader finishes).
+        function injectTripleLines(hosts, { variant } = {}) {
+          const markup = `
+    <div class="triple-line-wrapper" data-auto-triple-line="true" data-triple-line-variant="${variant || "static"}">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+          `.trim();
+
+          hosts.forEach((host) => {
+            // Only check for a direct child to avoid blocking intentional nested usages elsewhere.
+            if (host.querySelector(":scope > .triple-line-wrapper")) return;
+
+            // Ensure absolutely-positioned wrapper has a sane containing block.
+            const pos = window.getComputedStyle(host).position;
+            if (pos === "static") host.style.position = "relative";
+
+            host.insertAdjacentHTML("afterbegin", markup);
+          });
+        }
+
+        function injectNonPreloaderTripleLines() {
+          const hosts = Array.from(document.querySelectorAll(".has-triple-line")).filter(
+            (el) => !el.closest(".preloader-to-banner")
+          );
+          injectTripleLines(hosts, { variant: "static" });
+        }
+
+        function injectPreloaderTripleLines() {
+          const hosts = Array.from(
+            document.querySelectorAll(".preloader-to-banner .has-triple-line")
+          );
+          injectTripleLines(hosts, { variant: "preloader" });
+        }
+
+        function animatePreloaderTripleLines() {
+          if (!window.gsap) return;
+          const wrappers = Array.from(
+            document.querySelectorAll(
+              ".preloader-to-banner .has-triple-line > .triple-line-wrapper[data-triple-line-variant='preloader']"
+            )
+          );
+          if (!wrappers.length) return;
+
+          // Start above the viewport (safe because preloader section is at the very top),
+          // then slide down smoothly into place.
+          gsap.set(wrappers, { yPercent: -120 });
+          gsap.to(wrappers, { yPercent: 0, duration: 3.2, ease: "power3.out", stagger: 0.05 });
+        }
+        /* ADDED BY AI END */
+
         /* ADDED BY AI START */
         // Split text inside an element (e.g. H1/H4) into real rendered lines so we can animate line-by-line.
         // IMPORTANT: we keep the original element so your existing typography/styles still apply.
@@ -1009,10 +1098,146 @@
           window.addEventListener("blur", reset);
         }
 
-        runPreloader().then(initLenis);
+        // Non-preloader sections: inject immediately (no animation).
+        injectNonPreloaderTripleLines();
+
+        // Preloader section: inject + animate AFTER preloader completes.
+        runPreloader().then(() => {
+          injectPreloaderTripleLines();
+          animatePreloaderTripleLines();
+          initLenis();
+        });
         initAbsoHoverMicro();
         /* ADDED BY AI END */
       });
+    })();
+
+    // Mouse-follow image scatter effect for .clonable-prefooter
+    (function() {
+      const root = document.querySelector('.clonable-prefooter');
+      if (!root) return;
+
+      const images = [];
+      root.querySelectorAll('.medias img').forEach(image => {
+        images.push(image.getAttribute('src'));
+      });
+
+      if (!images.length) return;
+
+      // TUNE: lower number = fewer images spawned (less clutter)
+      const IMAGES_PER_SCREEN = 3;
+
+      let incr = 0,
+          oldIncrX = 0,
+          oldIncrY = 0,
+          resetDist = window.innerWidth / IMAGES_PER_SCREEN,
+          indexImg = 0;
+
+      root.addEventListener("mousemove", e => {
+        oldIncrX = e.clientX;
+        oldIncrY = e.clientY;
+      }, { once: true });
+
+      root.addEventListener("mousemove", e => {
+        const valX = e.clientX;
+        const valY = e.clientY;
+
+        incr += Math.abs(valX - oldIncrX) + Math.abs(valY - oldIncrY);
+
+        if (incr > resetDist) {
+          incr = 0;
+          createMedia(valX, valY - root.getBoundingClientRect().top, valX - oldIncrX, valY - oldIncrY);
+        }
+
+        oldIncrX = valX;
+        oldIncrY = valY;
+      });
+
+      function createMedia(x, y, deltaX, deltaY) {
+        if (!window.gsap) return;
+
+        const image = document.createElement("img");
+        image.setAttribute('src', images[indexImg]);
+        root.appendChild(image);
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            root.removeChild(image);
+            tl && tl.kill();
+          }
+        });
+
+        tl.fromTo(image, {
+          xPercent: -50 + (Math.random() - 0.5) * 80,
+          yPercent: -50 + (Math.random() - 0.5) * 10,
+          scaleX: 1.3,
+          scaleY: 1.3
+        }, {
+          scaleX: 1,
+          scaleY: 1,
+          ease: 'elastic.out(2, 0.6)',
+          duration: 0.45
+        });
+
+        tl.fromTo(image, {
+          x,
+          y,
+          rotation: (Math.random() - 0.5) * 20,
+        }, {
+          x: '+=' + deltaX * 4,
+          y: '+=' + deltaY * 4,
+          rotation: (Math.random() - 0.5) * 20,
+          ease: 'power4.out',
+          duration: 1.05
+        }, '<');
+
+        tl.to(image, {
+          duration: 0.2,
+          scale: 0.5,
+          delay: 0.05,
+          ease: 'back.in(1.5)'
+        });
+
+        indexImg = (indexImg + 1) % images.length;
+      }
+    })();
+
+    // GIF animation for clonable-prefooter - plays once when section is visible
+    // GIF src is set dynamically to trigger playback on scroll
+    // GIF has loop count = 1, so it stops on last frame automatically
+    (function() {
+      const gifElement = document.getElementById('stand-together-gif');
+      const section = document.querySelector('.clonable-prefooter');
+
+      console.log('[GIF] Image element:', gifElement);
+      console.log('[GIF] Section element:', section);
+
+      if (!gifElement || !section) {
+        console.error('[GIF] Image or section not found!');
+        return;
+      }
+
+      let hasPlayed = false;
+
+      // Use Intersection Observer - sets GIF src when section is visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          console.log('[GIF] IntersectionObserver triggered, isIntersecting:', entry.isIntersecting, 'ratio:', entry.intersectionRatio);
+
+          if (entry.isIntersecting && !hasPlayed) {
+            hasPlayed = true;
+            console.log('[GIF] Section is visible - loading and playing GIF');
+            // Setting src triggers the GIF to load and play from the start
+            gifElement.src = './assets/Banner-ezgif.com-loop-count.gif';
+            observer.disconnect();
+          }
+        });
+      }, {
+        threshold: 0.3 // Trigger when 30% of section is visible
+      });
+
+      observer.observe(section);
+      console.log('[GIF] IntersectionObserver set up for .clonable-prefooter');
     })();
   </script>
 </body>

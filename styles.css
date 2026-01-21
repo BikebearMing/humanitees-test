@@ -143,14 +143,14 @@ img {
     object-fit: cover;
 }
 
-.triple-line {
+/* .triple-line {
     width: 100%;
     height: 100%;
     position: relative;
-}
+} */
 
 /* Plain CSS (avoid SCSS-style nesting `&` so this works in all browsers) */
-.triple-line::before {
+/* .triple-line::before {
     content: '';
     position: absolute;
     top: 0;
@@ -159,6 +159,25 @@ img {
     width: 50vw;
     height: 100%;
     background: url('./assets/tripleline.png') no-repeat center center;
+} */
+ .triple-line-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute !important;
+    display: flex;
+    gap: 25.486vw;
+    justify-content: center;
+ }
+
+/* Plain CSS (no nesting). Lines follow the container/section height. */
+.triple-line-wrapper .line {
+    width: 1px;
+    height: 100%;
+    background: #D9CDB8;
+}
+
+.has-triple-line.line-black .triple-line-wrapper .line {
+    background: #474747 !important;
 }
 
 .revolver-parent {
@@ -167,6 +186,7 @@ img {
     position: relative;
     background-color: #333;
     overflow-x: clip;
+    overflow-y: clip;
 
     & .pinning-wrapper {
         width: 63.477vw;
@@ -294,93 +314,7 @@ img {
 }
 
 
-.grain-effect {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    overflow: hidden;
-    isolation: isolate;
-}
 
-.grain-effect::after {
-    content: '';
-    position: absolute;
-    top: -5%;
-    left: -5%;
-    ;
-    width: 110%;
-    height: 110%;
-    opacity: .35;
-    background-image: repeating-conic-gradient(var(--black) 0%, transparent .00003%, transparent .0005%, transparent .00095%), repeating-conic-gradient(var(--black) 0%, transparent .00005%, transparent 0.00015%, transparent 0.0009%);
-    background-size: cover;
-    animation: grain 0.5s steps(1) infinite;
-    z-index: 0;
-    pointer-events: none;
-    transform: scale(2);
-    /* try 1.5 → 3 */
-    transform-origin: center;
-}
-
-.triple-line::before {
-    z-index: 1;
-    /* above grain, below content */
-    pointer-events: none;
-}
-
-/* lift only the section’s immediate content */
-.grain-effect>* {
-    position: relative;
-    z-index: 2;
-}
-
-
-
-
-
-@keyframes grain {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-    }
-
-    10% {
-        transform: translate(-1%, -1%);
-    }
-
-    20% {
-        transform: translate(1%, 1%);
-    }
-
-    30% {
-        transform: translate(-2%, -2%);
-    }
-
-    40% {
-        transform: translate(3%, 3%);
-    }
-
-    50% {
-        transform: translate(-3%, -3%);
-    }
-
-    60% {
-        transform: translate(4%, 4%);
-    }
-
-    70% {
-        transform: translate(-4%, -4%);
-    }
-
-    80% {
-        transform: translate(2%, 2%);
-    }
-
-    90% {
-        transform: translate(-3%, -3%);
-    }
-}
 
 
 
@@ -441,7 +375,7 @@ img {
 .preloader-to-banner .abso-content .top-texts {
     display: flex;
     gap: 20.833vw;
-    left: 0.694vw;
+    left: 0.73vw;
     top: 27.361vw;
 }
 
@@ -790,4 +724,71 @@ video {
             display: inline-block;
         }
     }
+}
+
+/* Global grain overlay - sits on top of everything visually but allows clicks through */
+.grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    opacity: 0.05;
+    background-image: url(https://cdn.prod.website-files.com/6654d3c17b8020f4b7ba121d/665c8d2c94e29f993fd958f1_Grain.gif);
+    background-position: 0 0;
+    background-size: auto;
+    pointer-events: none; /* Critical: allows clicks to pass through */
+}
+
+
+.clonable-prefooter {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: #333333;
+}
+.clonable-prefooter .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 3vw;
+    z-index: 2;
+}
+
+.clonable-prefooter .container h1 {
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    font-size: 11.111vw;
+    text-align: center;
+    background: white;
+}
+.clonable-prefooter img {
+    width: 13.819vw;
+    height: 20.934vw;
+    position: absolute;
+    object-fit: cover;
+    border-radius: 4%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.clonable-prefooter .medias img {
+    width: 1px;
+    height: 1px;
+    top: 0;
+    left: 0;
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.clonable-prefooter .lottie-animation {
+    width: 100vw;
+    height: 48.611vw;
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
 }
